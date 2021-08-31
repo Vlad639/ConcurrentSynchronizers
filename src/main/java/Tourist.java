@@ -14,18 +14,10 @@ public class Tourist extends Thread{
     public void run() {
         try {
             Thread.sleep(randTime());
-            while (true) {
-                if (waitGroupSet) {
-                    Group.group.acquire();
-                    Group.addTourist();
-                    break;
-                }
-                else {
+                if (waitGroupSet)
+                    Group.cyclicBarrier.await();
+                else
                     Museum.addVisitors(1);
-                    break;
-                }
-            }
-
         }
         catch (Exception e){
             e.printStackTrace();
